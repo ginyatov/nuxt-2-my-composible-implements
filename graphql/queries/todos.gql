@@ -1,0 +1,5 @@
+query GetTodos($limit: Int) {
+  todos(limit: $limit) {
+    ...TodoFragment
+  }
+}

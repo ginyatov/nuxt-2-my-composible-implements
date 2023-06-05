@@ -1,0 +1,69 @@
+type Book {
+  author: String
+  id: ID!
+  title: String
+}
+
+type Cart {
+  createdAt: String!
+  id: ID!
+  products: [Product!]!
+  total: Int!
+  updatedAt: String!
+  user: User!
+}
+
+input CreateTodoInput {
+  author: String!
+  title: String!
+}
+
+type Mutation {
+  addTodo(input: CreateTodoInput!): Todo!
+  deleteProduct(id: ID!): Product!
+  deleteTodo(id: ID!): Todo!
+  updateProduct(id: ID!, price: Int, title: String): Product!
+  updateTodo(input: UpdateTodoInput!): Todo!
+}
+
+type Product {
+  article: Int!
+  discount: Int
+  id: ID!
+  image: String!
+  oldPrice: Int
+  price: Int!
+  title: String!
+}
+
+type Query {
+  books: [Book]!
+  cart: [Cart]!
+  productById(id: ID!): Product!
+  products: [Product!]!
+  todos(limit: Int = 10): [Todo!]!
+}
+
+type Todo {
+  author: String!
+  completed: Boolean!
+  createdAt: String!
+  id: ID!
+  title: String!
+  updatedAt: String!
+}
+
+input UpdateTodoInput {
+  completed: Boolean
+  id: ID!
+  title: String
+}
+
+type User {
+  createdAt: String!
+  email: String!
+  id: ID!
+  name: String!
+  password: String!
+  updatedAt: String!
+}

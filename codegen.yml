@@ -1,0 +1,22 @@
+overwrite: true
+generates:
+  schema.graphql:
+    schema: 'http://localhost:4000'
+    plugins:
+      - 'schema-ast'
+  graphql/generated/graphql.ts:
+    schema: 'http://localhost:4000'
+    documents: 'graphql/**/*.{graphql,gql}'
+    plugins:
+      - add: { content: '// THIS FILE IS GENERATED, DO NOT EDIT!' }
+      - add: { content: '/* tslint:disable */' }
+      - add: { content: '/* eslint-disable */' }
+      - add: { content: '// @ts-nocheck' }
+      - 'typescript'
+      - 'typescript-operations'
+      - 'typescript-vue-apollo'
+    config:
+      withCompositionFunctions: false
+      emitLegacyCommonJSImports: false
+      # vueApolloComposableImportFrom: '~/composition/apollo'
+      # vueCompositionApiImportFrom: 'vue'
