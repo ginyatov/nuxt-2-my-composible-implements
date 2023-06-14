@@ -1,5 +1,5 @@
 import { ActionTree, GetterTree, MutationTree } from 'vuex'
-import { RootState, ActionAugments } from '~/types/store'
+import { RootState, ActionAugments, RootGetters } from '~/types/store'
 
 export type State = {
   car: string
@@ -14,14 +14,21 @@ export type Actions = {
 }
 
 export type Getters = {
-  getCar(state: State): string
+  getCar(
+    state: State,
+    getters: Getters,
+    rootState: RootState,
+    rootGetters: RootGetters
+  ): string
 }
 
 const state = (): State => ({
   car: 'foo',
 })
 const getters: GetterTree<State, RootState> & Getters = {
-  getCar(state) {
+  getCar(state, getters, rootState, rootGetters) {
+    console.log(333)
+    console.log(rootGetters['cart/product/getImageWithDescription'])
     return state.car
   },
 }

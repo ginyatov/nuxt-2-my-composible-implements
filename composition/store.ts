@@ -15,13 +15,13 @@ type MapGettersReturnType<T extends Record<string, keyof RootGetters>> = {
 const useMapGetters = <T extends Record<string, keyof RootGetters>>(
   map: T
 ): MapGettersReturnType<T> => {
-  const store = useStore()
+  const store = useStore();
 
   return Object.entries(map).reduce((acc, [key, getter]) => {
-    acc[key as keyof T] = computed(() => store.getters[getter])
-    return acc
-  }, {} as MapGettersReturnType<T>)
-}
+    acc[key as keyof T] = computed(() => store.getters[getter]) as unknown as ComputedRef<RootGetters[T[keyof T]]>;
+    return acc;
+  }, {} as MapGettersReturnType<T>);
+};
 
 type MapStateReturnType<T extends Record<string, (state: RootState) => any>> = {
   [K in keyof T]: ComputedRef<ReturnType<T[K]>>
@@ -41,7 +41,7 @@ const useMapState = <T extends Record<string, (state: RootState) => any>>(
 export const useStore = () => {
   const vm = useInstance('useStore')
 
-  const store: Omit<Store<RootState>, 'getter'> & {
+  const store: Omit<Store<RootState>, 'getters'> & {
     getters: {
       [K in keyof RootGetters]: ReturnType<RootGetters[K]>
     }

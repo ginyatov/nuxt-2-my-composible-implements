@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useState } from 'vuex-composition-helpers'
-import { computed, watch } from 'vue'
+import { computed } from 'vue'
 import { useStore } from '~/composition'
 
 const store = useStore()
@@ -25,11 +25,12 @@ const { currentRole, profile22, cart } = store.useMapState({
   cart: (state) => state.cart.name,
 })
 
-const { test } = store.useMapGetters({
+const { test, xx } = store.useMapGetters({
   test: 'car/getCar',
+  xx: 'cart/product/getImageWithDescription'
 })
 
-console.log(22222, cart.value, currentCar.value, test.value)
+console.log(22222, cart.value, currentCar.value, test.value, xx.value)
 
 const ss = currentRole.value
 
