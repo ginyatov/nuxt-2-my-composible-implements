@@ -58,6 +58,13 @@ export default {
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     transpile: ['vuex-composition-helpers'],
+    /*
+   Для включение дебага в ide
+   extend(config, ctx) {
+      if (ctx.isDev) {
+        config.devtool = ctx.isClient ? 'source-map' : 'inline-source-map'
+      }
+    }, */
     postcss: {
       postcssOptions: {
         plugins: {

@@ -11,13 +11,10 @@ const apollo = useApollo()
 const {
   result: todos,
   loading,
-  load,
-} = apollo.useLazyQuery<GetTodosQuery, GetTodosQueryVariables>(
-  GetTodosDocument,
-  {
-    limit: 5,
-  }
-)
+  refetch,
+} = apollo.useQuery<GetTodosQuery, GetTodosQueryVariables>(GetTodosDocument, {
+  limit: 5,
+})
 
 const reversedTodos = computed(() => {
   if (!todos.value?.todos) return []
@@ -26,7 +23,7 @@ const reversedTodos = computed(() => {
 })
 
 function loadTodos() {
-  load({
+  refetch({
     limit: 1,
   })
 }
@@ -34,7 +31,7 @@ function loadTodos() {
 
 <template>
   <div class="container mx-auto py-8">
-    <h2 class="text-3xl font-bold mb-4">Todo List</h2>
+    <h2 class="text-3xl font-bold mb-4">Todo List Composition</h2>
 
     <ui-button @click="loadTodos" class="bg-amber-200"> load todos </ui-button>
 

@@ -9,12 +9,20 @@ interface User {
 
 export interface UserState {
   currentUser: User | null
+  loading: boolean
+  test: {
+    foo: string
+  }
 }
 
-const userModule: Module<UserState, RootState> = {
+const userProfileModule: Module<UserState, RootState> = {
   namespaced: true,
   state: () => ({
     currentUser: null,
+    loading: false,
+    test: {
+      foo: 'bar',
+    },
   }),
   mutations: {
     SET_USER(state, user: User | null) {
@@ -45,4 +53,4 @@ const userModule: Module<UserState, RootState> = {
   },
 }
 
-export default userModule
+export default userProfileModule

@@ -149,6 +149,12 @@ export const useApollo = () => {
       })
     }
 
+    console.log(5555, apollo)
+    /*  apollo.addSmartQuery<TResult, OmitRequestConstantParams<TVariables>>(
+      'test',
+      queryOptions
+    ) */
+
     apollo
       .query<TResult, OmitRequestConstantParams<TVariables>>(queryOptions)
       .then(onQuerySuccess)
