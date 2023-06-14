@@ -26,10 +26,10 @@ const { currentRole, profile22, cart } = store.useMapState({
 })
 
 const { test } = store.useMapGetters({
-  test: 'user',
+  test: 'car/getCar',
 })
 
-console.log(22222, cart.value, currentCar.value)
+console.log(22222, cart.value, currentCar.value, test.value)
 
 const ss = currentRole.value
 
@@ -45,6 +45,7 @@ const profile1 = computed(() => store.state.user)
     <h1>User</h1>
 
     <h2 class="text-2xl">{{ currentCar }}</h2>
+    <h2 class="text-2xl">{{ test }}</h2>
     <ui-button @click="commitCar"> commitCar </ui-button>
     <ui-button @click="dispatchCar"> dispatchCar </ui-button>
     <hr />

@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { computed, watch } from 'vue'
-import { useGetters, useRoute, useRouter } from '~/composition'
+import { useStore, useRoute, useRouter } from '~/composition'
+const store = useStore()
+const getters = store.getters
 
-const getters = useGetters()
-
-console.log(getters['user/profile/currentUser'])
+// console.log(getters['user/profile/currentUser'])
 
 const route = useRoute()
 const router = useRouter()
