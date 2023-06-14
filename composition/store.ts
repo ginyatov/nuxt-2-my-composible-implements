@@ -1,9 +1,14 @@
 // @ts-nocheck
 
 import { computed, ComputedRef } from 'vue'
-import { Store, mapState as mapStateVuex } from 'vuex'
+import { CommitOptions, DispatchOptions, Store } from 'vuex'
 import { useInstance } from '~/composition'
-import { RootState } from '~/types/store'
+import {
+  RootState,
+  RootGetters,
+  RootMutations,
+  RootActions,
+} from '~/types/store'
 
 type MapStateReturnType<T extends Record<string, (state: RootState) => any>> = {
   [K in keyof T]: ComputedRef<ReturnType<T[K]>>
@@ -36,15 +41,32 @@ const useMapState = <T extends Record<string, (state: RootState) => any>>(
 export const useStore = () => {
   const vm = useInstance('useStore')
 
-  const store: Store<RootState> = vm.$store
+  const store: Omit<Store, 'getter'> & {
+    getters: {
+      [K in keyof RootGetters]: ReturnType<RootGetters[K]>
+    }
+  } = vm.$store
+
+  const commit = <K extends keyof RootMutations>(
+    key: K,
+    payload: Parameters<RootMutations[K]>[1],
+    options?: CommitOptions
+  ): ReturnType<RootMutations[K]> => store.commit(key, payload, options)
+
+  const dispatch = <K extends keyof RootActions>(
+    key: K,
+    payload?: Parameters<RootActions[K]>[1],
+    options?: DispatchOptions
+  ): ReturnType<RootActions[K]> => store.dispatch(key, payload, options)
 
   return {
     store,
     state: store.state,
     getters: store.getters,
-    commit: store.commit,
-    dispatch: store.dispatch,
+    commit,
+    dispatch,
     useMapState,
+    useMapGetters,
   }
 }
 

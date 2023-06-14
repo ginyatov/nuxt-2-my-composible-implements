@@ -5,12 +5,31 @@ import { useStore } from '~/composition'
 
 const store = useStore()
 
-const { currentRole, profile22 } = store.useMapState({
+function commitCar() {
+  store.commit('car/setCar', 'xxxx')
+}
+
+function dispatchCar() {
+  store.dispatch('car/setCar', 'x')
+
+  setTimeout(() => {
+    commitCar()
+  }, 1000)
+}
+
+const currentCar = computed(() => store.getters['car/getCar'])
+
+const { currentRole, profile22, cart } = store.useMapState({
   currentRole: (state) => state.user.setting.role,
   profile22: (state) => state.user.profile,
+  cart: (state) => state.cart.name,
 })
 
-console.log(22222, currentRole.value)
+const { test } = store.useMapGetters({
+  test: 'user',
+})
+
+console.log(22222, cart.value, currentCar.value)
 
 const ss = currentRole.value
 
@@ -24,6 +43,10 @@ const profile1 = computed(() => store.state.user)
 <template>
   <div>
     <h1>User</h1>
+
+    <h2 class="text-2xl">{{ currentCar }}</h2>
+    <ui-button @click="commitCar"> commitCar </ui-button>
+    <ui-button @click="dispatchCar"> dispatchCar </ui-button>
     <hr />
 
     {{ JSON.stringify(currentRole) }}
